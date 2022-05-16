@@ -49,6 +49,18 @@ class CronExpression
      * @var array Order in which to test of cron parts
      */
     private static $order = array(self::YEAR, self::MONTH, self::DAY, self::WEEKDAY, self::HOUR, self::MINUTE);
+    
+    public const MAPPINGS = [
+        '@yearly' => '0 0 1 1 *',
+        '@annually' => '0 0 1 1 *',
+        '@monthly' => '0 0 1 * *',
+        '@weekly' => '0 0 * * 0',
+        '@daily' => '0 0 * * *',
+        '@midnight' => '0 0 * * *',
+        '@hourly' => '0 * * * *',
+    ];
+    
+    private static $registeredAliases = self::MAPPINGS;
 
     /**
      * Factory method to create a new CronExpression.
@@ -109,9 +121,12 @@ class CronExpression
      * @param string       $expression   CRON expression (e.g. '8 * * * *')
      * @param FieldFactory $fieldFactory Factory to create cron fields
      */
-    public function __construct($expression, FieldFactory $fieldFactory)
+    public function __construct($expression, FieldFactory $fieldFactory = null)
     {
-        $this->fieldFactory = $fieldFactory;
+        $shortcut = strtolower($expression);
+        $expression = self::$registeredAliases[$shortcut] ?? $expression;
+
+        $this->fieldFactory = $fieldFactory ?: new FieldFactory();
         $this->setExpression($expression);
     }
 

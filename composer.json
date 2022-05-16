@@ -25,5 +25,7 @@
             "Tests\\": "tests/Cron/"
         }
     },
-    "abandoned": "dragonmantank/cron-expression"
+    "replace": {
+        "dragonmantank/cron-expression": "*"
+    },
 }

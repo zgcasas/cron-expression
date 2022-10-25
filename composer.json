@@ -10,10 +10,14 @@
         "homepage": "https://github.com/mtdowling"
     }],
     "require": {
-        "php": ">=7.0.0"
+        "php": "^7.2|^8.0",
+        "webmozart/assert": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0|~5.0"
+        "phpstan/phpstan": "^1.0",
+        "phpunit/phpunit": "^7.0|^8.0|^9.0",
+        "phpstan/phpstan-webmozart-assert": "^1.0",
+        "phpstan/extension-installer": "^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -22,10 +26,21 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/Cron/"
+            "Cron\\Tests\\": "tests/Cron/"
         }
     },
     "replace": {
-        "dragonmantank/cron-expression": "*"
+        "dragonmantank/cron-expression": "*",
+        "mtdowling/cron-expression": "*"
+    },
+    "scripts": {
+        "phpstan": "./vendor/bin/phpstan analyze",
+        "test": "phpunit"
+    },
+    "config": {
+        "allow-plugins": {
+            "ocramius/package-versions": true,
+            "phpstan/extension-installer": true
+        }
     }
 }

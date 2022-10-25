@@ -2,7 +2,7 @@
 
 namespace Cron;
 
-use DateTime;
+use DateTimeInterface;
 
 
 /**
@@ -10,12 +10,16 @@ use DateTime;
  */
 class YearField extends AbstractField
 {
-    public function isSatisfiedBy(DateTime $date, $value)
+    public function isSatisfiedBy(DateTimeInterface $date, $value, bool $invert): bool
     {
+        if ($value === '?') {
+            return true;
+        }
+
         return $this->isSatisfied($date->format('Y'), $value);
     }
 
-    public function increment(DateTime $date, $invert = false)
+    public function increment(DateTimeInterface &$date, $invert = false, $parts = null): FieldInterface
     {
         if ($invert) {
             $date->modify('-1 year');
@@ -30,8 +34,8 @@ class YearField extends AbstractField
         return $this;
     }
 
-    public function validate($value)
+    public function validate(string $value): bool
     {
-        return (bool) preg_match('/^[\*,\/\-0-9]+$/', $value);
+        return (bool) preg_match('/^[\*,\/\-\d]+$/', $value);
     }
 }

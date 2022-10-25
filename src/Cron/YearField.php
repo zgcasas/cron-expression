@@ -36,6 +36,6 @@ class YearField extends AbstractField
 
     public function validate(string $value): bool
     {
-        return (bool) preg_match('/^[\*,\/\-\d]+$/', $value);
+        return (bool) preg_match('/^[\*,\/\-\d\?]+$/', $value);
     }
 }

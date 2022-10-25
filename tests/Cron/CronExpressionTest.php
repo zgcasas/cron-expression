@@ -622,7 +622,7 @@ class CronExpressionTest extends TestCase
     public function testFieldPositionIsHumanAdjusted(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('6 is not a valid position');
+        $this->expectExceptionMessage('7 is not a valid position');
 
         $e = new CronExpression('0 * * * * ? *');
     }
@@ -812,5 +812,12 @@ class CronExpressionTest extends TestCase
         $cron = new CronExpression('0 0 1 1 *');
         $prev = $cron->getPreviousRunDate(new \DateTimeImmutable('2021-09-07T09:36:00Z'));
         $this->assertEquals(new \DateTime('2021-01-01 00:00:00'), $prev);
+    }
+
+    public function testYear()
+    {
+        $cron = new CronExpression('0 0 1 1 * 2022');
+        $prev = $cron->getNextRunDate(new \DateTimeImmutable('2021-09-07T09:36:00Z'));
+        $this->assertEquals(new \DateTime('2022-01-01 00:00:00'), $prev);
     }
 }

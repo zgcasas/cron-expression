@@ -43,6 +43,8 @@ class FieldFactory implements FieldFactoryInterface
                 return new MonthField();
             case CronExpression::WEEKDAY:
                 return new DayOfWeekField();
+            case CronExpression::YEAR:
+                return new YearField();
         }
 
         throw new InvalidArgumentException(

@@ -10,6 +10,17 @@ use DateTimeInterface;
  */
 class YearField extends AbstractField
 {
+    /**
+     * {@inheritdoc}
+     */
+    protected $rangeStart = 2000;
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $rangeEnd = 2050;
+
+
     public function isSatisfiedBy(DateTimeInterface $date, $value, bool $invert): bool
     {
         if ($value === '?') {
